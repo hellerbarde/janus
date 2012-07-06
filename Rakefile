@@ -15,6 +15,8 @@ task :link_vim_conf_files do
     unless File.exist?(dest)
       abs_path = expand("../janus/vim/#{file}", __FILE__)
       if is_windows
+        dest.gsub!("/", "\\")
+        abs_path.gsub!("/", "\\")
         `mklink #{dest} #{abs_path}`
       else
         ln_s(abs_path, dest)
