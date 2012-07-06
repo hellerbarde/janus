@@ -4,13 +4,21 @@ $: << File.join(ROOT_PATH, 'janus', 'ruby')
 require 'janus'
 require 'fileutils'
 include Janus
+require 'rbconfig'
+# Some versions of Ruby on Windows apparently don't have ln_s implemented
+is_windows = (RbConfig::CONFIG['host_os'] =~ /mswin|mingw|cygwin/)
 
 desc "link ViM configuration files."
 task :link_vim_conf_files do
   %w[ vimrc gvimrc ].each do |file|
     dest = expand("~/.#{file}")
     unless File.exist?(dest)
-      ln_s(expand("../janus/vim/#{file}", __FILE__), dest)
+      abs_path = expand("../janus/vim/#{file}", __FILE__)
+      if is_windows
+        `mklink #{dest} #{abs_path}`
+      else
+        ln_s(abs_path, dest)
+      end
     end
   end
 end
@@ -45,25 +53,25 @@ end
 
 task :update do
   puts "Cleaning the janus folder"
-  `git clean -xdf -- janus &> /dev/null`
+  `git clean -xdf -- janus 2>&1`
   `git ls-files --exclude-standard --others -- janus`.split("\n").each do |untracked|
     FileUtils.rm_rf File.expand_path(untracked.chomp, File.dirname(__FILE__))
   end
 
   puts "Pulling latest changes"
-  `git pull > /dev/null`
+  `git pull`
 
   puts "Cleaning the janus folder"
-  `git clean -xdf -- janus &> /dev/null`
+  `git clean -xdf -- janus 2>&1 /dev/null`
   `git ls-files --exclude-standard --others -- janus`.split("\n").each do |untracked|
     FileUtils.rm_rf File.expand_path(untracked.chomp, File.dirname(__FILE__))
   end
 
   puts "Synchronising submodules urls"
-  `git submodule sync > /dev/null`
+  `git submodule sync`
 
   puts "Updating the submodules"
-  `git submodule update --init > /dev/null`
+  `git submodule update --init`
 end
 
 task :install => [:folders, :link_vim_conf_files] do
