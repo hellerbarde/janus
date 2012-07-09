@@ -17,7 +17,7 @@ task :link_vim_conf_files do
       if is_windows
         dest.gsub!("/", "\\")
         abs_path.gsub!("/", "\\")
-        `mklink #{dest} #{abs_path}`
+        system("mklink #{dest} #{abs_path} 1>&2")
       else
         ln_s(abs_path, dest)
       end
