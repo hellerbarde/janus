@@ -3,6 +3,9 @@ _backup
 _temp
 .netrwhist
 
+# other backup files
+*~
+
 # Vimius file
 .vimius
 

@@ -18,6 +18,24 @@ function! janus#expand_path(path)
   return expand(a:path)
 endfunction
 
+" Join parts of a path with the appropriate pathseparator.
+" Taken from ZyX_I's frawor (on bitbucket)
+" os.path.join      :: path[, path[, ...]] | [path] ? path
+function! janus#pathjoin(...)
+	if s:os.name is# 'nt'
+		let s:eps='[/\\]'
+	else
+		let s:eps='\V'.escape(janus#separator(), '\')
+	endif
+    let components=copy((a:0 && type(a:1)==type([]))?
+                \           (a:1):
+                \           (a:000))
+    call filter(components, 'type(v:val)=='.type(''))
+    return substitute(join(components, janus#separator()), s:eps.'\+',
+                \     escape(janus#separator(), '\&~'), 'g')
+endfunction
+
+
 " Return a resolved path
 "
 " @param [String] path

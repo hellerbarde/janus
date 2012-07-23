@@ -1,5 +1,5 @@
-if filereadable(expand("~/.gvimrc.before"))
-  source ~/.gvimrc.before
+if filereadable(expand(janus#pathjoin("~", ".gvimrc.before")))
+  source janus#pathjoin("~", ".gvimrc.before")
 endif
 
 " CtrlP OS-X Menu remapping
@@ -7,6 +7,6 @@ if janus#is_plugin_enabled('ctrlp') && has("gui_macvim")
   macmenu &File.New\ Tab key=<D-S-t>
 endif
 
-if filereadable(expand("~/.gvimrc.after"))
-  source ~/.gvimrc.after
+if filereadable(expand(janus#pathjoin("~", ".gvimrc.after")))
+  source janus#pathjoin("~", ".gvimrc.after")
 endif
