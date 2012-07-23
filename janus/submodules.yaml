@@ -65,6 +65,7 @@ submodules:
         - syntax
     handlebars:
     javascript:
+    less:
     markdown:
     nodejs:
     puppet:
@@ -74,6 +75,7 @@ submodules:
     scala:
     scss:
     textile:
+    clojure:
 
 
   # Tools
