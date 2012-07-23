@@ -8,9 +8,9 @@ if has('win32')
 	" users are allowed to create, so we copy the vimrc instead of linking it.
 	" Thus, the resolving does not work. Hard-Coding is the result. It's kinda bad
 	" and please fix it if you can.
-	let g:janus_path = escape(expand("~\.vim\janus"), " ")
-	let g:janus_vim_path = escape(expand(g:janus_path . "\vim"), " ")
-	let g:janus_custom_path = escape(expand("~\.janus"), " ")
+	let g:janus_path = escape(expand('~\.vim\janus'), ' ')
+	let g:janus_vim_path = escape(expand(g:janus_path . '\vim'), ' ')
+	let g:janus_custom_path = escape(expand('~\.janus'), ' ')
 	" Source janus's core
 	exe 'source ' . g:janus_vim_path . '\core\before\plugin\janus.vim'
 else
