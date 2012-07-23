@@ -22,11 +22,11 @@ endfunction
 " Taken from ZyX_I's frawor (on bitbucket)
 " os.path.join      :: path[, path[, ...]] | [path] ? path
 function! janus#pathjoin(...)
-	if has('win32')
-		let s:eps='[/\\]'
-	else
-		let s:eps='\V'.escape(janus#separator(), '\')
-	endif
+    if has('win32')
+        let s:eps='[/\\]'
+    else
+        let s:eps='\V'.escape(janus#separator(), '\')
+    endif
     let components=copy((a:0 && type(a:1)==type([]))?
                 \           (a:1):
                 \           (a:000))
@@ -34,7 +34,6 @@ function! janus#pathjoin(...)
     return substitute(join(components, janus#separator()), s:eps.'\+',
                 \     escape(janus#separator(), '\&~'), 'g')
 endfunction
-
 
 " Return a resolved path
 "
