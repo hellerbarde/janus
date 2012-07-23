@@ -22,7 +22,7 @@ endfunction
 " Taken from ZyX_I's frawor (on bitbucket)
 " os.path.join      :: path[, path[, ...]] | [path] ? path
 function! janus#pathjoin(...)
-	if s:os.name is# 'nt'
+	if has('win32')
 		let s:eps='[/\\]'
 	else
 		let s:eps='\V'.escape(janus#separator(), '\')
